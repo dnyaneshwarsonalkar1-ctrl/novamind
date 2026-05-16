@@ -660,7 +660,7 @@ function AppContent() {
 
 export default function App() {
   return (
-    <GoogleOAuthProvider clientId="281883916056-t14msa0h2kej5clsfiopq4oq0fq50b3a.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="165317681676-sqln5rta4g0qlsle5tkt10jkmqhjttkj.apps.googleusercontent.com">
       <AppContent />
     </GoogleOAuthProvider>
   );
