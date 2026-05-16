@@ -77,11 +77,7 @@ function AppContent() {
 
   const fetchSavedHistory = async (userId) => {
     try {
-<<<<<<< HEAD
       const res = await axios.get("https://novamind-server.onrender.com/history", {
-=======
-      const res = await axios.get("http://localhost:5000/history", {
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
         params: { userId },
       });
 
@@ -105,11 +101,7 @@ function AppContent() {
     if (!user?.id) return;
 
     try {
-<<<<<<< HEAD
       await axios.post("https://novamind-server.onrender.com/history", {
-=======
-      await axios.post("http://localhost:5000/history", {
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
         userId: user.id,
         title: entry.title,
         type: entry.type || "text",
@@ -126,10 +118,7 @@ function AppContent() {
 
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-<<<<<<< HEAD
       // eslint-disable-next-line react-hooks/set-state-in-effect
-=======
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
       setUser(parsedUser);
       if (parsedUser.id) {
         fetchSavedHistory(parsedUser.id);
@@ -225,11 +214,7 @@ function AppContent() {
         formData.append("message", message || "Analyze this image");
 
         const res = await axios.post(
-<<<<<<< HEAD
           "https://novamind-server.onrender.com/analyze-image",
-=======
-          "http://localhost:5000/analyze-image",
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
           formData,
           {
             headers: {
@@ -242,11 +227,7 @@ function AppContent() {
           (res.data.reply || res.data.analysis || ``).toString().trim() ||
           `Image "${uploadedFile.name}" analyzed.`;
       } else {
-<<<<<<< HEAD
         const res = await axios.post("https://novamind-server.onrender.com/chat", {
-=======
-        const res = await axios.post("http://localhost:5000/chat", {
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
           message,
         });
 
@@ -279,45 +260,6 @@ function AppContent() {
     }
   };
 
-<<<<<<< HEAD
-=======
-  const handleSearch = async () => {
-    if (!message.trim()) return;
-
-    setChatStarted(true);
-    setInfoText("Searching the web for the latest information...");
-
-    try {
-      const res = await axios.post("http://localhost:5000/search", {
-        query: message,
-      });
-
-      const answer = res.data.answer || "No search results available.";
-      animateReply(answer);
-
-      const entry = {
-        id: Date.now(),
-        title: `Search: ${message}`,
-        date: new Date().toLocaleDateString(),
-        type: "search",
-        content: answer,
-      };
-
-      const updatedHistory = [entry, ...chatHistory.slice(0, 9)];
-      setChatHistory(updatedHistory);
-      saveHistoryToServer(entry);
-
-      setMessage("");
-      setInfoText("");
-    } catch (error) {
-      console.log("Search error", error);
-      setReply("Error connecting to backend search");
-      setInfoText("Unable to reach the server. Please try again later.");
-      setTyping(false);
-    }
-  };
-
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
   // FILE SELECT
   const handleFileSelect = (e) => {
 
@@ -475,7 +417,6 @@ function AppContent() {
 
             {user ? (
               <div className="flex items-center gap-3">
-<<<<<<< HEAD
                 {user.picture ? (
                   <img 
                     src={user.picture} 
@@ -489,15 +430,6 @@ function AppContent() {
                 )}
                 <div className="hidden sm:block">
                   <p className="text-sm font-semibold">{user.name || "Guest"}</p>
-=======
-                <img 
-                  src={user.picture} 
-                  alt={user.name}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="hidden sm:block">
-                  <p className="text-sm font-semibold">{user.name}</p>
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
                 </div>
                 <button
                   onClick={handleSignOut}
@@ -549,11 +481,7 @@ function AppContent() {
               <div className="flex justify-center mb-12 pt-20">
 
                 <div className="text-center">
-<<<<<<< HEAD
                   <h2 className="text-5xl font-bold mb-6">Hi {user.given_name || user.name?.split(" ")[0] || "there"}</h2>
-=======
-                  <h2 className="text-5xl font-bold mb-6">Hi {user.given_name}</h2>
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
                   <p className="text-xl text-gray-400">Welcome to NovaMind</p>
                   <p className="text-gray-500 mt-4">Ask anything or paste an image below</p>
                 </div>
@@ -732,11 +660,7 @@ function AppContent() {
 
 export default function App() {
   return (
-<<<<<<< HEAD
-    <GoogleOAuthProvider clientId="165317681676-sqln5rta4g0qlsle5tkt10jkmqhjttkj.apps.googleusercontent.com">
-=======
     <GoogleOAuthProvider clientId="281883916056-t14msa0h2kej5clsfiopq4oq0fq50b3a.apps.googleusercontent.com">
->>>>>>> a19a7d528e5330c4249ad795280404037c2dee34
       <AppContent />
     </GoogleOAuthProvider>
   );
