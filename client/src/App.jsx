@@ -363,58 +363,100 @@ function AppContent() {
 
     <div className="flex flex-col lg:flex-row h-screen bg-black text-white overflow-hidden">
 
-      {/* SIDEBAR */}
-      <div
-        className={`fixed lg:relative z-50 top-0 left-0 h-full w-60 sm:w-72 bg-[#111111] border-r border-gray-800 p-4 transition-transform duration-300
+     {/* SIDEBAR */}
+<div
+  className={`fixed top-0 left-0 z-50 h-full 
+  w-[75%] max-w-[260px] bg-[#111111] 
+  border-r border-gray-800 p-4
+  transition-transform duration-300
   ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-  lg:translate-x-0 lg:flex lg:flex-col overflow-hidden`}
-      >
-<div className="flex justify-between items-center mb-5 lg:hidden">
-  <h2 className="text-xl font-bold">Menu</h2>
+  lg:translate-x-0 lg:relative lg:w-72`}
+>
+  {/* Header */}
+  <div className="flex justify-between items-center mb-5 lg:hidden">
+    <h2 className="text-lg font-semibold">Menu</h2>
 
+    <button
+      onClick={() => setSidebarOpen(false)}
+      className="text-2xl text-white"
+    >
+      ✕
+    </button>
+  </div>
+
+  {/* New Chat */}
   <button
-    onClick={() => setSidebarOpen(false)}
-    className="text-2xl text-white"
+    onClick={() => {
+      newChat();
+      setSidebarOpen(false);
+    }}
+    className="w-full bg-[#1f2a44] hover:bg-[#263352]
+    p-4 rounded-2xl text-left font-semibold mb-6"
   >
-    ✕
+    + New Chat
   </button>
+
+  {/* Menu */}
+  <div className="space-y-3">
+
+    <div
+      onClick={() => {
+        handlePanelClick("history");
+        setSidebarOpen(false);
+      }}
+      className={`p-3 rounded-xl cursor-pointer text-[16px]
+      ${
+        activeTab === "history"
+          ? "bg-gray-700"
+          : "hover:bg-gray-800"
+      }`}
+    >
+      Chat History
+    </div>
+
+    <div
+      onClick={() => {
+        handlePanelClick("assistant");
+        setSidebarOpen(false);
+      }}
+      className={`p-3 rounded-xl cursor-pointer text-[16px]
+      ${
+        activeTab === "assistant"
+          ? "bg-gray-700"
+          : "hover:bg-gray-800"
+      }`}
+    >
+      AI Assistant
+    </div>
+
+    <div
+      onClick={() => {
+        handlePanelClick("prompts");
+        setSidebarOpen(false);
+      }}
+      className={`p-3 rounded-xl cursor-pointer text-[16px]
+      ${
+        activeTab === "prompts"
+          ? "bg-gray-700"
+          : "hover:bg-gray-800"
+      }`}
+    >
+      Saved Prompts
+    </div>
+
+  </div>
 </div>
-        <button
-          onClick={newChat}
-          className="w-full bg-[#1f2a44] hover:bg-[#263352] p-4 rounded-2xl text-left font-semibold mb-6"
-        >
-          + New Chat
-        </button>
-
-        <div className="space-y-3 flex-1 overflow-y-auto">
-
-          <div
-            onClick={() => handlePanelClick("history")}
-            className={`p-3 rounded-xl cursor-pointer ${activeTab === "history" ? "bg-gray-700" : "hover:bg-gray-800"}`}
-          >
-            Chat History
-          </div>
-
-          <div
-            onClick={() => handlePanelClick("assistant")}
-            className={`p-3 rounded-xl cursor-pointer ${activeTab === "assistant" ? "bg-gray-700" : "hover:bg-gray-800"}`}
-          >
-            AI Assistant
-          </div>
-
-          <div
-            onClick={() => handlePanelClick("prompts")}
-            className={`p-3 rounded-xl cursor-pointer ${activeTab === "prompts" ? "bg-gray-700" : "hover:bg-gray-800"}`}
-          >
-            Saved Prompts
-          </div>
-
-        </div>
-
-      </div>
 
       {/* MAIN */}
-      <div className="flex-1 flex flex-col">
+      <div
+  className={`flex-1 flex flex-col w-full transition-all duration-300
+  ${
+    sidebarOpen
+      ? "ml-[75%] sm:ml-[260px]"
+      : "ml-0"
+  }
+  lg:ml-0`}
+>
 
         {/* TOPBAR */}
         <div className="flex justify-between items-center p-5 border-b border-gray-800">
@@ -482,7 +524,7 @@ function AppContent() {
         </div>
 
         {/* CHAT AREA */}
-        <div className={`flex-1 flex flex-col items-center px-4 transition-all duration-500 overflow-y-auto ${chatStarted ? "justify-start pt-8" : "justify-start pt-28 sm:pt-36"}`}>
+        <div className={`flex-1 flex flex-col items-center px-4 transition-all duration-500 overflow-y-auto ${chatStarted ? "justify-start pt-8" : "justify-start pt-16 sm:pt-24"}`}>
 
           <div className="w-full max-w-3xl">
 
