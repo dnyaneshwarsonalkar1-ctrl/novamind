@@ -18,6 +18,7 @@ function AppContent() {
   const [imagePreview, setImagePreview] = useState("");
   const [listening, setListening] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [infoText, setInfoText] = useState("");
   const [displayData, setDisplayData] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
@@ -360,10 +361,14 @@ function AppContent() {
 
   return (
 
-    <div className="flex h-screen bg-black text-white overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-screen bg-black text-white overflow-hidden">
 
       {/* SIDEBAR */}
-      <div className="w-72 bg-[#111111] border-r border-gray-800 p-4 hidden lg:flex lg:flex-col overflow-hidden">
+      <div
+        className={`fixed lg:relative z-50 top-0 left-0 h-full w-72 bg-[#111111] border-r border-gray-800 p-4 transition-transform duration-300
+  ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+  lg:translate-x-0 lg:flex lg:flex-col overflow-hidden`}
+      >
 
         <button
           onClick={newChat}
@@ -408,6 +413,12 @@ function AppContent() {
           <div>
 
             <h1 className="text-3xl font-bold">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden text-white text-2xl mr-3"
+              >
+                ☰
+              </button>
               NovaMind
             </h1>
 
@@ -416,10 +427,10 @@ function AppContent() {
           <div className="flex gap-3 items-center">
 
             {user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
                 {user.picture ? (
-                  <img 
-                    src={user.picture} 
+                  <img
+                    src={user.picture}
                     alt={user.name || "User"}
                     className="w-10 h-10 rounded-full"
                   />
@@ -469,7 +480,7 @@ function AppContent() {
             {!chatStarted && !user && (
               <div className="flex justify-center mb-12 pt-20">
                 <div className="text-center max-w-2xl px-6">
-                  <h2 className="text-4xl font-bold mb-4">Welcome to NovaMind</h2>
+                  <h2 className="text-2xl sm:text-4xl font-bold mb-4">Welcome to NovaMind</h2>
                   <p className="text-lg text-gray-300 mb-3">Your AI workspace for chat, image analysis, and smarter prompts.</p>
                   <p className="text-gray-500">Sign in to personalize your experience, or type anything below to get started right away.</p>
                 </div>
@@ -481,7 +492,7 @@ function AppContent() {
               <div className="flex justify-center mb-12 pt-20">
 
                 <div className="text-center">
-                  <h2 className="text-5xl font-bold mb-6">Hi {user.given_name || user.name?.split(" ")[0] || "there"}</h2>
+                  <h2 className="text-3xl sm:text-5xl font-bold mb-6">Hi {user.given_name || user.name?.split(" ")[0] || "there"}</h2>
                   <p className="text-xl text-gray-400">Welcome to NovaMind</p>
                   <p className="text-gray-500 mt-4">Ask anything or paste an image below</p>
                 </div>
@@ -491,9 +502,9 @@ function AppContent() {
             )}
 
             {/* INPUT */}
-            <div className="bg-[#1b1b1b] border border-gray-700 rounded-[35px] p-5 shadow-2xl mb-6">
+            <div className="bg-[#1b1b1b] border border-gray-700 rounded-[25px] sm:rounded-[35px] p-3 sm:p-5 shadow-2xl mb-6">
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
 
                 {/* UPLOAD */}
                 <button
