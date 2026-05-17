@@ -365,11 +365,20 @@ function AppContent() {
 
       {/* SIDEBAR */}
       <div
-        className={`fixed lg:relative z-50 top-0 left-0 h-full w-72 bg-[#111111] border-r border-gray-800 p-4 transition-transform duration-300
+        className={`fixed lg:relative z-50 top-0 left-0 h-full w-60 sm:w-72 bg-[#111111] border-r border-gray-800 p-4 transition-transform duration-300
   ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
   lg:translate-x-0 lg:flex lg:flex-col overflow-hidden`}
       >
+<div className="flex justify-between items-center mb-5 lg:hidden">
+  <h2 className="text-xl font-bold">Menu</h2>
 
+  <button
+    onClick={() => setSidebarOpen(false)}
+    className="text-2xl text-white"
+  >
+    ✕
+  </button>
+</div>
         <button
           onClick={newChat}
           className="w-full bg-[#1f2a44] hover:bg-[#263352] p-4 rounded-2xl text-left font-semibold mb-6"
@@ -454,7 +463,7 @@ function AppContent() {
               <>
                 <button
                   onClick={() => login()}
-                  className="px-5 py-2 rounded-full border border-gray-600 hover:border-white"
+                  className="px-4 sm:px-5 py-2 text-sm sm:text-base rounded-full border border-gray-600 hover:border-white"
                 >
                   Sign In
                 </button>
@@ -473,15 +482,15 @@ function AppContent() {
         </div>
 
         {/* CHAT AREA */}
-        <div className={`flex-1 flex flex-col items-center px-4 transition-all duration-500 overflow-y-auto ${chatStarted ? "justify-start pt-10" : "justify-center"}`}>
+        <div className={`flex-1 flex flex-col items-center px-4 transition-all duration-500 overflow-y-auto ${chatStarted ? "justify-start pt-8" : "justify-start pt-28 sm:pt-36"}`}>
 
           <div className="w-full max-w-3xl">
 
             {!chatStarted && !user && (
               <div className="flex justify-center mb-12 pt-20">
                 <div className="text-center max-w-2xl px-6">
-                  <h2 className="text-2xl sm:text-4xl font-bold mb-4">Welcome to NovaMind</h2>
-                  <p className="text-lg text-gray-300 mb-3">Your AI workspace for chat, image analysis, and smarter prompts.</p>
+                  <h2 className="text-4xl sm:text-5xl font-bold mb-4">Welcome to NovaMind</h2>
+                  <p className="text-xl sm:text-lg text-gray-300 mb-3">Your AI workspace for chat, image analysis, and smarter prompts.</p>
                   <p className="text-gray-500">Sign in to personalize your experience, or type anything below to get started right away.</p>
                 </div>
               </div>
@@ -502,7 +511,7 @@ function AppContent() {
             )}
 
             {/* INPUT */}
-            <div className="bg-[#1b1b1b] border border-gray-700 rounded-[25px] sm:rounded-[35px] p-3 sm:p-5 shadow-2xl mb-6">
+            <div className="bg-[#1b1b1b] border border-gray-700 rounded-[30px] p-4 sm:p-5 shadow-2xl mb-6">
 
               <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
 
@@ -532,7 +541,7 @@ function AppContent() {
                     setMessage(e.target.value)
                   }
                   placeholder="Ask anything or paste an image..."
-                  className="flex-1 bg-transparent outline-none text-lg text-white"
+                  className="flex-1 bg-transparent outline-none text-xl sm:text-lg text-white"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       sendMessage();
@@ -545,7 +554,7 @@ function AppContent() {
                   onClick={startVoiceSearch}
                   className={`h-12 px-4 rounded-full border border-gray-700 flex items-center gap-2 hover:border-white ${listening ? "text-green-400" : ""}`}
                 >
-                  <FiMic />
+                  <FiMic size={22} />
                 </button>
 
                 {/* REAL-TIME INFO */}
@@ -561,7 +570,7 @@ function AppContent() {
                   onClick={sendMessage}
                   className="h-12 w-12 rounded-full bg-white text-black flex items-center justify-center hover:bg-gray-200"
                 >
-                  <FiChevronRight size={24} />
+                  <FiChevronRight size={28} />
                 </button>
 
               </div>
