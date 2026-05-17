@@ -11,6 +11,7 @@ import { FaInstagram } from "react-icons/fa";
 
 function AppContent() {
 
+
   const [message, setMessage] = useState("");
   const [reply, setReply] = useState("");
   const [chatStarted, setChatStarted] = useState(false);
@@ -235,7 +236,14 @@ function AppContent() {
         replyText = (res.data.reply || "No reply available.").toString();
       }
 
-      animateReply(replyText);
+      setTyping(true);
+
+setReply("");
+
+setTimeout(() => {
+  setReply(replyText);
+  setTyping(false);
+}, 1200);
 
       const entry = {
         id: Date.now(),
@@ -632,9 +640,21 @@ function AppContent() {
               </div>
             )}
 
-            {typing && (
-              <div className="text-gray-400 mb-4">AI is typing...</div>
-            )}
+          {typing && (
+  <div className="flex items-center gap-2 mb-4 text-gray-400">
+
+    <div className="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+
+    <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0.2s]"></div>
+
+    <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0.4s]"></div>
+
+    <span className="ml-2">
+      NovaMind is thinking...
+    </span>
+
+  </div>
+)}
 
             {displayData.length > 0 && (
               <div className="w-full mb-6 space-y-3">
@@ -680,15 +700,27 @@ function AppContent() {
               </div>
             )}
 
-            {imagePreview && (
-              <div className="mb-5 flex justify-center">
-                <img
-                  src={imagePreview}
-                  alt="preview"
-                  className="w-56 rounded-2xl border border-gray-700"
-                />
-              </div>
-            )}
+           {imagePreview && (
+  <div className="mb-5 flex flex-col items-center gap-3">
+
+    <img
+      src={imagePreview}
+      alt="preview"
+      className="w-56 rounded-2xl border border-gray-700"
+    />
+
+    <button
+      onClick={() => {
+        setUploadedFile(null);
+        setImagePreview("");
+      }}
+      className="px-5 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white font-medium transition"
+    >
+      Remove Image
+    </button>
+
+  </div>
+)}
 
             {reply && (
               <div className="bg-[#1c1c1c] border border-gray-700 rounded-3xl p-6 mb-6 whitespace-pre-wrap text-[17px] leading-8 shadow-lg">
