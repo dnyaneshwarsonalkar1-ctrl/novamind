@@ -39,15 +39,14 @@ const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend-url.onrender.com"
-  ]
+  origin: "*",
+  methods: ["GET", "POST"],
+  credentials: true,
 }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Server is running");
+  res.status(200).send("NovaMind backend is running ✅");
 });
 
 app.post("/chat", async (req, res) => {
@@ -257,6 +256,8 @@ app.post("/search", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
