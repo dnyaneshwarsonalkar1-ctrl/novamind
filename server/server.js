@@ -38,7 +38,12 @@ mongoose.connect(process.env.MONGODB_URI)
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-frontend-url.onrender.com"
+  ]
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
