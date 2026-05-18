@@ -8,6 +8,7 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { FaInstagram } from "react-icons/fa";
+const API_URL = "https://novamind-server.onrender.com";
 
 function AppContent() {
 
@@ -79,7 +80,7 @@ function AppContent() {
 
   const fetchSavedHistory = async (userId) => {
     try {
-      const res = await axios.get("https://novamind-server.onrender.com/history", {
+      const res = await axios.get(`${API_URL}/history`, {
         params: { userId },
       });
 
@@ -103,7 +104,7 @@ function AppContent() {
     if (!user?.id) return;
 
     try {
-      await axios.post("https://novamind-server.onrender.com/history", {
+      await axios.post(`${API_URL}/history`, {
         userId: user.id,
         title: entry.title,
         type: entry.type || "text",
@@ -215,8 +216,7 @@ function AppContent() {
         formData.append("image", uploadedFile);
         formData.append("message", message || "Analyze this image");
 
-        const res = await axios.post(
-          "https://novamind-server.onrender.com/analyze-image",
+        const res = await axios.post(`${API_URL}/analyze-image`,
           formData,
           {
             headers: {
@@ -229,7 +229,7 @@ function AppContent() {
           (res.data.reply || res.data.analysis || ``).toString().trim() ||
           `Image "${uploadedFile.name}" analyzed.`;
       } else {
-        const res = await axios.post("https://novamind-server.onrender.com/chat", {
+        const res = await axios.post(`${API_URL}/chat`, {
           message,
         });
 
@@ -262,11 +262,21 @@ setTimeout(() => {
       setUploadedFile(null);
       setImagePreview("");
     } catch (error) {
-      console.log(error);
-      setReply("Error connecting to backend");
-      setInfoText("Unable to reach the server. Please try again later.");
-      setTyping(false);
-    }
+  console.error("Backend Error:", error);
+
+  if (error.response) {
+    setReply(`Server Error: ${error.response.status}`);
+    setInfoText("Backend responded with an error.");
+  } else if (error.request) {
+    setReply("Backend server is offline.");
+    setInfoText("Render backend may be sleeping. Wait 20 seconds and try again.");
+  } else {
+    setReply("Something went wrong.");
+    setInfoText(error.message);
+  }
+
+  setTyping(false);
+}
   };
 
   // FILE SELECT
